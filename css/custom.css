@@ -66,6 +66,23 @@
 
 }
 
+/*  SUBPAGE 2 */
+
+#prevImgCol img{
+    top:50%;
+    min-height:100%;
+    min-width:100%;
+}
+
+#mainImgCol img{
+    margin: 0 auto;
+    top:50%;
+    min-height:100%;
+    min-width:100%;
+}
+
+
+
 /* SIDEBAR AND MAIN CONTENT */
 
 .well {

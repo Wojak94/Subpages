@@ -1,3 +1,10 @@
+$.ajaxSetup ({
+    // Disable caching of AJAX responses
+    cache: false
+});
+
+
+
 var json = {"images": [
     {
         "src": "./img/death-breath.jpg",
@@ -6,7 +13,7 @@ var json = {"images": [
         "captionHover": "asdasdasd"
     },
     {
-        "src": "./img/death-breath.jpg",
+        "src": "./img/waza.jpg",
         "caption": "author 2",
         "headerHover": "xDDDD",
         "captionHover": "asdasdasd"
@@ -52,12 +59,12 @@ var json = {"images": [
 
 
 
-window.onload = function dupa(){
+window.onload = function drawAuctions(){
 
     for(var i=0; json.images.length; i++) {
         var thumb = document.createElement('div');
         thumb.className = 'thumbnail col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center';
-
+        thumb.id = i;
 
         var img = document.createElement('img');
         img.className = 'img-responsive image';
@@ -90,20 +97,6 @@ window.onload = function dupa(){
 
 };
 
-// $('.thumbnail').hover(
-//
-//     function () {
-//         $(this).find('.caption').stop().fadeOut();
-//         $(this).find('.caption-hover').stop().fadeIn();
-//
-//     },
-//
-//     function () {
-//         $(this).find('.caption').stop().fadeIn();
-//         $(this).find('.caption-hover').stop().fadeOut();
-//     });
-
-
 $('#metro').on('mouseenter', '.thumbnail', function() {
     $(this).find('.caption').stop().fadeOut();
     $(this).find('.caption-hover').stop().fadeIn();
@@ -113,3 +106,65 @@ $('#metro').on('mouseleave', '.thumbnail', function() {
     $(this).find('.caption').stop().fadeIn();
     $(this).find('.caption-hover').stop().fadeOut();
 });
+
+
+
+
+$('#metro').on('click', '.thumbnail', function () {
+    $('#metro').fadeOut('fast', function(){
+        $.get('./subpage2.html', function(data) {
+            var $data = $(data);
+            $data = $data.find('#main-row');
+            $('#metro').replaceWith($data);
+            loadCoverFlow();
+        });
+
+
+});
+
+    var prevImgSrc = jQuery(this).prev().find('img:first').attr('src');
+    var mainImgSrc =jQuery(this).find('img:first').attr('src');
+    var nextImgSrc = jQuery(this).next().find('img:first').attr('src');
+
+
+    function loadCoverFlow() {
+        var prevImgCol = document.createElement('div');
+        prevImgCol.className = 'col-xs-2';
+        prevImgCol.id = 'previousImgCol';
+
+        var mainImgCol = document.createElement('div');
+        mainImgCol.className = 'col-xs-8';
+        mainImgCol.id = 'mainImgCol';
+
+
+        var nextImgCol = document.createElement('div');
+        nextImgCol.className = 'col-xs-2';
+        nextImgCol.id = 'nextImgCol';
+
+        var prevImg = document.createElement('img');
+        prevImg.className = 'img-responsive';
+        prevImg.src = prevImgSrc;
+
+        var mainImg = document.createElement('img');
+        mainImg.className = 'img-responsive';
+        mainImg.src = mainImgSrc;
+
+        var nextImg = document.createElement('img');
+        nextImg.className = 'img-responsive';
+        nextImg.src = nextImgSrc;
+
+
+        var mainRow = document.getElementById("main-row");
+        mainRow.appendChild(prevImgCol);
+            prevImgCol.appendChild(prevImg);
+        mainRow.appendChild(mainImgCol);
+            mainImgCol.appendChild(mainImg);
+        mainRow.appendChild(nextImgCol);
+            nextImgCol.appendChild(nextImg);
+
+    }
+
+
+
+});
+
