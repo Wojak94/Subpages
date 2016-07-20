@@ -18,3 +18,5 @@ $('.thumbnail').hover(
         $(this).find('.caption').stop().fadeIn();
         $(this).find('.caption-hover').stop().fadeOut();
 });
+
+
