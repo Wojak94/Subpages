@@ -1,7 +1,9 @@
+/* ALL */
+
 * {
     border-radius: 0 !important;
 }
-
+/*  IMAGE AND CAPTION */
 
 .thumbnail {
     border: 0 none;
@@ -17,12 +19,7 @@
 .img-responsive.image {
     top:50%;
     min-height:100%;
-    display:block;
-    left:50%;
-    -webkit-transform: translate(-50%, -50%);
     min-width:100%;
-
-
 }
 .caption {
     width:100%;
@@ -69,6 +66,7 @@
 
 }
 
+/* SIDEBAR AND MAIN CONTENT */
 
 .well {
     padding-left: 0px;
@@ -79,10 +77,6 @@
 
 
 
-
-#log-text {
-    margin-top: 12px;
-}
 
 .bs-sidebar.affix {
     width: 150px;
@@ -95,7 +89,16 @@
     padding-bottom: 50px;
 }
 
+/* 'LOGGED AS..' TEXT */
+
+#log-text {
+    margin-top: 12px;
+}
+
+/* SCREEN RESOLUTION */
+
 @media (min-width: 544px) {
+
     .bs-sidebar.affix {
         width: 150px;
         margin-top: 50px;
