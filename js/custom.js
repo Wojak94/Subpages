@@ -147,6 +147,9 @@ $('#metro').on('click', '.thumbnail', function () {
         prevImgCol.className = 'col-xs-2';
         prevImgCol.id = 'previousImgCol';
 
+        var prevId = document.createElement('div');
+        prevId.id = mainThumId-1;
+
         var mainImgCol = document.createElement('div');
         mainImgCol.className = 'col-xs-8';
         mainImgCol.id = 'mainImgCol';
@@ -154,6 +157,9 @@ $('#metro').on('click', '.thumbnail', function () {
         var nextImgCol = document.createElement('div');
         nextImgCol.className = 'col-xs-2';
         nextImgCol.id = 'nextImgCol';
+
+        var nextId = document.createElement('div');
+        nextId.id = mainThumId+1;
 
         var mainImg = document.createElement('img');
         mainImg.className = 'img-responsive';
@@ -194,15 +200,17 @@ $('#metro').on('click', '.thumbnail', function () {
         var mainRow = document.getElementById("main-row");
         mainRow.appendChild(prevImgCol);
         if(mainThumId-1 >= 0) {
-            prevImgCol.appendChild(prevImg);
-            prevImgCol.appendChild(arrowPrev);
+            prevImgCol.appendChild(prevId);
+            prevId.appendChild(prevImg);
+            prevId.appendChild(arrowPrev);
         }
         mainRow.appendChild(mainImgCol);
             mainImgCol.appendChild(mainImg);
         mainRow.appendChild(nextImgCol);
         if(mainThumId+1 < json.images.length) {
-            nextImgCol.appendChild(nextImg);
-            nextImgCol.appendChild(arrowNext);
+            nextImgCol.appendChild(nextId);
+            nextId.appendChild(nextImg);
+            nextId.appendChild(arrowNext);
         }
         mainRow.appendChild(prevCapCol);
         mainRow.appendChild(mainCapCol);
@@ -214,3 +222,218 @@ $('#metro').on('click', '.thumbnail', function () {
     }
 });
 
+$('#main-content').on('click', '#previousImgCol .img-responsive', function () {
+    $('#main-row').fadeOut( function(){
+        $.get('./subpage2.html', function(data) {
+            var $data = $(data);
+            $data = $data.find('#main-row');
+            $('#main-row').replaceWith($data);
+            loadCoverFlow(mainThumId);
+        });
+             var mainThumId = parseInt($("#"+(jQuery(this).attr('id')+ " #previousImgCol div:first")).attr('id'));
+        function loadCoverFlow() {
+            if(mainThumId-1 >= 0) {
+                var prevImg = document.createElement('img');
+                prevImg.className = 'img-responsive';
+                prevImg.src = json.images[mainThumId - 1].src;
+            }
+
+            if(mainThumId+1 < json.images.length){
+                var nextImg = document.createElement('img');
+                nextImg.className = 'img-responsive';
+                nextImg.src = json.images[mainThumId + 1].src;
+            }
+
+            var prevImgCol = document.createElement('div');
+            prevImgCol.className = 'col-xs-2';
+            prevImgCol.id = 'previousImgCol';
+
+            var prevId = document.createElement('div');
+            prevId.id = mainThumId-1;
+
+            var mainImgCol = document.createElement('div');
+            mainImgCol.className = 'col-xs-8';
+            mainImgCol.id = 'mainImgCol';
+
+            var nextImgCol = document.createElement('div');
+            nextImgCol.className = 'col-xs-2';
+            nextImgCol.id = 'nextImgCol';
+
+            var nextId = document.createElement('div');
+            nextId.id = mainThumId+1;
+
+            var mainImg = document.createElement('img');
+            mainImg.className = 'img-responsive';
+            mainImg.src = json.images[mainThumId].src;
+
+            var prevCapCol = document.createElement('div');
+            prevCapCol.className = 'col-xs-1';
+            prevCapCol.id = 'previousCapCol';
+
+            var arrowPrev = document.createElement('div');
+            arrowPrev.className = 'arrowPrev';
+
+            var mainCapCol = document.createElement('div');
+            mainCapCol.className = 'col-xs-10';
+            mainCapCol.id = 'mainCapCol';
+
+            var nextCapCol = document.createElement('div');
+            nextCapCol.className = 'col-xs-1';
+            nextCapCol.id = 'nextCapCol';
+
+            var arrowNext = document.createElement('div');
+            arrowNext.className = 'arrowNext';
+
+            var capCovFlow = document.createElement('div');
+            capCovFlow.className = 'title covFlow';
+
+            var capCovHead = document.createElement('h3');
+            capCovHead.innerHTML = json.images[mainThumId].title;
+
+            var capCov = document.createElement('p');
+            capCov.innerHTML = json.images[mainThumId].caption;
+
+            var capCovPrice = document.createElement('h1');
+            capCovPrice.innerHTML = json.images[mainThumId].price + " zł";
+
+
+
+            var mainRow = document.getElementById("main-row");
+            mainRow.appendChild(prevImgCol);
+            if(mainThumId-1 >= 0) {
+                prevImgCol.appendChild(prevId);
+                prevId.appendChild(prevImg);
+                prevId.appendChild(arrowPrev);
+            }
+            mainRow.appendChild(mainImgCol);
+            mainImgCol.appendChild(mainImg);
+            mainRow.appendChild(nextImgCol);
+            if(mainThumId+1 < json.images.length) {
+                nextImgCol.appendChild(nextId);
+                nextId.appendChild(nextImg);
+                nextId.appendChild(arrowNext);
+            }
+            mainRow.appendChild(prevCapCol);
+            mainRow.appendChild(mainCapCol);
+            mainCapCol.appendChild(capCovFlow);
+            capCovFlow.appendChild(capCovHead);
+            capCovFlow.appendChild(capCov);
+            capCovFlow.appendChild(capCovPrice);
+            mainRow.appendChild(nextCapCol);
+        }
+
+
+    });
+
+
+
+
+});
+
+$('#main-content').on('click', '#nextImgCol .img-responsive', function () {
+    $('#main-row').fadeOut( function(){
+        $.get('./subpage2.html', function(data) {
+            var $data = $(data);
+            $data = $data.find('#main-row');
+            $('#main-row').replaceWith($data);
+            loadCoverFlow(mainThumId);
+        });
+        var mainThumId = parseInt($("#"+(jQuery(this).attr('id')+ " #nextImgCol div:first")).attr('id'));
+        function loadCoverFlow() {
+            if(mainThumId-1 >= 0) {
+                var prevImg = document.createElement('img');
+                prevImg.className = 'img-responsive';
+                prevImg.src = json.images[mainThumId - 1].src;
+            }
+
+            if(mainThumId+1 < json.images.length){
+                var nextImg = document.createElement('img');
+                nextImg.className = 'img-responsive';
+                nextImg.src = json.images[mainThumId + 1].src;
+            }
+
+            var prevImgCol = document.createElement('div');
+            prevImgCol.className = 'col-xs-2';
+            prevImgCol.id = 'previousImgCol';
+
+            var prevId = document.createElement('div');
+            prevId.id = mainThumId-1;
+
+            var mainImgCol = document.createElement('div');
+            mainImgCol.className = 'col-xs-8';
+            mainImgCol.id = 'mainImgCol';
+
+            var nextImgCol = document.createElement('div');
+            nextImgCol.className = 'col-xs-2';
+            nextImgCol.id = 'nextImgCol';
+
+            var nextId = document.createElement('div');
+            nextId.id = mainThumId+1;
+
+            var mainImg = document.createElement('img');
+            mainImg.className = 'img-responsive';
+            mainImg.src = json.images[mainThumId].src;
+
+            var prevCapCol = document.createElement('div');
+            prevCapCol.className = 'col-xs-1';
+            prevCapCol.id = 'previousCapCol';
+
+            var arrowPrev = document.createElement('div');
+            arrowPrev.className = 'arrowPrev';
+
+            var mainCapCol = document.createElement('div');
+            mainCapCol.className = 'col-xs-10';
+            mainCapCol.id = 'mainCapCol';
+
+            var nextCapCol = document.createElement('div');
+            nextCapCol.className = 'col-xs-1';
+            nextCapCol.id = 'nextCapCol';
+
+            var arrowNext = document.createElement('div');
+            arrowNext.className = 'arrowNext';
+
+            var capCovFlow = document.createElement('div');
+            capCovFlow.className = 'title covFlow';
+
+            var capCovHead = document.createElement('h3');
+            capCovHead.innerHTML = json.images[mainThumId].title;
+
+            var capCov = document.createElement('p');
+            capCov.innerHTML = json.images[mainThumId].caption;
+
+            var capCovPrice = document.createElement('h1');
+            capCovPrice.innerHTML = json.images[mainThumId].price + " zł";
+
+
+
+            var mainRow = document.getElementById("main-row");
+            mainRow.appendChild(prevImgCol);
+            if(mainThumId-1 >= 0) {
+                prevImgCol.appendChild(prevId);
+                prevId.appendChild(prevImg);
+                prevId.appendChild(arrowPrev);
+            }
+            mainRow.appendChild(mainImgCol);
+            mainImgCol.appendChild(mainImg);
+            mainRow.appendChild(nextImgCol);
+            if(mainThumId+1 < json.images.length) {
+                nextImgCol.appendChild(nextId);
+                nextId.appendChild(nextImg);
+                nextId.appendChild(arrowNext);
+            }
+            mainRow.appendChild(prevCapCol);
+            mainRow.appendChild(mainCapCol);
+            mainCapCol.appendChild(capCovFlow);
+            capCovFlow.appendChild(capCovHead);
+            capCovFlow.appendChild(capCov);
+            capCovFlow.appendChild(capCovPrice);
+            mainRow.appendChild(nextCapCol);
+        }
+
+
+    });
+
+
+
+
+});
