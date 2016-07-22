@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Subpage 1</title>
 
     <link rel='stylesheet' href='./css/bootstrap.min.css' />
@@ -13,7 +14,7 @@
 
 <!-- NAVBAR -->
 
-	<nav class="navbar navbar-default navbar-top" role="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top" id="navbar-top" role="navigation">
 		<div class="container-fluid">
 			<!-- NAVBAR HEADER -->
 			<div class="navbar-header">
@@ -68,34 +69,34 @@
 
 <!-- MAIN CONTENT -->
 
-<div class="container">
-	<div class="row">
+<div id="wrapper">
+	<div class="hidden-xs" id="sidebar-wrapper">
 		<!-- SIDEBAR -->
-		<div class="col-xs-2">
-			<div class="well bs-sidebar affix hidden-xs" id="sidebar">
-				<ul class="nav nav-pills nav-stacked" id="sidebar-left-btn">
-					<li><a href="#">Side Link 1</a></li>
-					<li><a href="#">Side Link 2</a></li>
-					<li><a href="#">Side Link 3</a></li>
-					<li><a href="#">Side Link 4</a></li>
-					<li><a href="#">Side Link 5</a></li>
-					<li><a href="#">Side Link 6</a></li>
-				</ul>
-			</div>
+		<div class="well bs-sidebar" id="sidebar">
+			<ul class="nav nav-pills nav-stacked" id="sidebar-left-btn">
+				<li class="custom-li"><a href="#">Side Link 1</a></li>
+				<li><a href="#">Side Link 2</a></li>
+				<li><a href="#">Side Link 3</a></li>
+				<li><a href="#">Side Link 4</a></li>
+				<li><a href="#">Side Link 5</a></li>
+				<li><a href="#">Side Link 6</a></li>
+			</ul>
 		</div>
+	</div>
 		<!--MAIN BODY-->
-		<div class="container" id="main-content">
+	<div id="page-content-wrapper">
+		<div class="container-fluid" id="main-content">
 			<div class="row-fluid" id="metro">
-					<!--<div class="thumbnail col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">-->
-						<!--<img class="img-responsive image" src="img/waza.jpg">-->
-						<!--<div class="title">-->
-							<!--<p>Example Caption</p>-->
-						<!--</div>-->
-                        <!--<div class="title-hover">-->
-							<!--<h5>xDDDDDffffffffgggggggggggggg</h5>-->
-							<!--<p>dupa duppppaaaaa dupa duuap duadap dupa duppppaaaaa dupa duuap duadap</p>-->
-                        <!--</div>-->
+				<!--<div class="thumbnail col-xs-6 col-sm-4 col-md-3 col-lg-3 text-center">-->
+					<!--<img class="img-responsive image" src="img/waza.jpg">-->
+					<!--<div class="caption">-->
+						<!--<p>Example Caption</p>-->
 					<!--</div>-->
+					<!--<div class="caption-hover">-->
+						<!--<h5>xDDDDDffffffffgggggggggggggg</h5>-->
+						<!--<p>dupa duppppaaaaa dupa duuap duadap dupa duppppaaaaa dupa duuap duadap</p>-->
+					<!--</div>-->
+				<!--</div>				-->
  			</div>
 		</div>
 	</div>

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Subpage 2</title>
+
     <link rel='stylesheet' href='./css/bootstrap.min.css' />
     <link rel='stylesheet' href='./css/custom.css' />
 </head>
@@ -12,7 +14,7 @@
 
 <!-- NAVBAR -->
 
-<nav class="navbar navbar-default navbar-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-top" role="navigation">
     <div class="container-fluid">
         <!-- NAVBAR HEADER -->
         <div class="navbar-header">
@@ -67,49 +69,45 @@
 
 <!-- MAIN CONTENT -->
 
-<div class="container">
-    <div class="row">
+<div id="wrapper">
+    <div class="hidden-xs" id="sidebar-wrapper">
         <!-- SIDEBAR -->
-        <div class="col-xs-2">
-            <div class="well bs-sidebar affix hidden-xs" id="sidebar">
-                <ul class="nav nav-pills nav-stacked" id="sidebar-left-btn">
-                    <li><a href="#">Side Link 1</a></li>
-                    <li><a href="#">Side Link 2</a></li>
-                    <li><a href="#">Side Link 3</a></li>
-                    <li><a href="#">Side Link 4</a></li>
-                    <li><a href="#">Side Link 5</a></li>
-                    <li><a href="#">Side Link 6</a></li>
-                </ul>
-            </div>
+        <div class="well bs-sidebar" id="sidebar">
+            <ul class="nav nav-pills nav-stacked" id="sidebar-left-btn">
+                <li><a href="#">Side Link 1</a></li>
+                <li><a href="#">Side Link 2</a></li>
+                <li><a href="#">Side Link 3</a></li>
+                <li><a href="#">Side Link 4</a></li>
+                <li><a href="#">Side Link 5</a></li>
+                <li><a href="#">Side Link 6</a></li>
+            </ul>
         </div>
-        <!--MAIN BODY-->
-        <div class="container" id="main-content">
+    </div>
+    <!--MAIN BODY-->
+    <div id="page-content-wrapper">
+        <div class="container-fluid" id="main-content">
             <div class="row-fluid" id="main-row">
-                <!--<div class="col-xs-2" id="previousImgCol">-->
+                <!--<div class="col-xs-3" id="previousImgCol">-->
                     <!--<img class="img-responsive" src="./img/death-breath.jpg">-->
                     <!--<div class="arrowPrev"></div>-->
                 <!--</div>-->
-                <!--<div class="col-xs-8" id="mainImgCol">-->
+                <!--<div class="col-xs-6" id="mainImgCol">-->
                     <!--<img class="img-responsive" src="./img/Firefox_wallpaper.png">-->
                 <!--</div>-->
-                <!--<div class="col-xs-2" id="nextImgCol">-->
+                <!--<div class="col-xs-3" id="nextImgCol">-->
                     <!--<img class="img-responsive" src="./img/Firefox_wallpaper.png">-->
                     <!--<div class="arrowNext"></div>-->
                 <!--</div>-->
-                <!--<div class="col-xs-1" id="previousCapCol">-->
-
+                <!--<div class="col-xs-2" id="previousCapCol"></div>-->
+                <!--<div class="col-xs-8" id="mainCapCol">-->
+                    <!--<div class="caption covFlow">-->
+                    <!--<h3>Tytuł</h3>-->
+                    <!--<p>asddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asdddddddddddasddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asdddddddddddasddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asdddddddddddasddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd</p>-->
+                    <!--<h1>1200 zł</h1>-->
+                    <!--</div>-->
                 <!--</div>-->
-                <!--<div class="col-xs-10" id="mainCapCol">-->
-                  <!--<div class="caption covFlow">-->
-                        <!--<h3>Tytuł</h3>-->
-                        <!--<p>asddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asdddddddddddasddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asdddddddddddasddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asdddddddddddasddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd asddddddddddd</p>-->
-                        <!--<h1>1200 zł</h1>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-1" id="nextCapCol">-->
-
-                <!--</div>-->
-           </div>
+                <!--<div class="col-xs-2" id="nextCapCol"></div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
@@ -124,3 +122,4 @@
 
 </body>
 </html>
+
