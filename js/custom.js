@@ -65,6 +65,9 @@ var json = {"images": [
     }
 ]};
 
+
+var mainImgId = 0;
+
 window.onload = function drawAuctions(){
 
     for(var i=0; i<json.images.length; i++) {
@@ -103,42 +106,89 @@ window.onload = function drawAuctions(){
 };
 
 $('#metro').on('click', '.thumbnail', function () {
+    mainImgId = parseInt(jQuery(this).attr('id'));
+
     $('#metro').fadeOut( function(){
         $.get('./subpage2.html', function(data) {
             var $data = $(data);
             $data = $data.find('#main-row');
             $('#metro').replaceWith($data);
-            loadCoverFlow(Id);
+            loadCoverFlow(mainImgId);
         });
     });
-    var Id = parseInt(jQuery(this).attr('id'));
+
 });
 
-$('#main-content').on('click', '#previousImgCol .img-responsive', function () {
-    $('#main-row').fadeOut( function(){
-        $.get('./subpage2.html', function(data) {
-            var $data = $(data);
-            $data = $data.find('#main-row');
-            $('#main-row').replaceWith($data);
-            loadCoverFlow(Id);
+
+$('#main-content').on('click','#nextImgCol .img-responsive', function () {
+        var imgSrcPrev = json.images[mainImgId].src;
+        var imgSrc = json.images[mainImgId+1].src;
+    if(mainImgId+2 < json.images.length){
+        var imgSrcNext = json.images[mainImgId + 2].src;}
+        var h3 = json.images[mainImgId+1].title;
+        var p = json.images[mainImgId+1].caption;
+        var price = json.images[mainImgId+1].price;
+
+        $('#previousImgWrap').fadeOut(function () {
+        $('#previousImgWrap .img-responsive').attr('src', imgSrcPrev);});
+
+        $('#mainImgCol').fadeOut(function () {
+            $('#mainImgCol .img-responsive').attr('src', imgSrc);});
+        $('#mainCapCol').fadeOut(function () {
+            $('.covFlow h3').text(h3);
+            $('.covFlow p').text(p);
+            $('.covFlow h1').text(price + " zł");
         });
-             var Id = parseInt($("#"+(jQuery(this).attr('id')+ " #previousImgCol div:first")).attr('id'));
-    });
-});
 
-$('#main-content').on('click', '#nextImgCol .img-responsive', function () {
-    $('#main-row').fadeOut( function(){
-        $.get('./subpage2.html', function(data) {
-            var $data = $(data);
-            $data = $data.find('#main-row');
-            $('#main-row').replaceWith($data);
-            loadCoverFlow(Id);
+        $('#nextImgWrap').fadeOut(function () {
+            if(mainImgId+2 < json.images.length){
+            $('#nextImgCol .img-responsive').attr('src', imgSrcNext);}
         });
-        var Id = parseInt($("#"+(jQuery(this).attr('id')+ " #nextImgCol div:first")).attr('id'));
-    });
+        if(mainImgId == 0){$('#previousImgWrap ').delay(400).fadeIn(500);}
+        else{$('#previousImgWrap ').fadeIn(500);}
+        $('#mainImgCol').fadeIn();
+        $('#mainCapCol').fadeIn();
+        if(mainImgId+2 < json.images.length){$('#nextImgWrap').fadeIn(500);}
+
+        mainImgId++;
 });
 
-function loadCoverFlow(mainThumId) {
+$('#main-content').on('click','#previousImgCol .img-responsive', function () {
+        if(mainImgId-2 >= 0){
+            var imgSrcPrev = json.images[mainImgId -2].src;}
+        var imgSrc = json.images[mainImgId-1].src;
+        var imgSrcNext = json.images[mainImgId].src;
+
+        var h3 = json.images[mainImgId-1].title;
+        var p = json.images[mainImgId-1].caption;
+        var price = json.images[mainImgId-1].price;
+
+        $('#nextImgWrap').fadeOut(function () {
+            $('#nextImgWrap .img-responsive').attr('src', imgSrcNext);});
+
+        $('#mainImgCol').fadeOut(function () {
+            $('#mainImgCol .img-responsive').attr('src', imgSrc);});
+        $('#mainCapCol').fadeOut(function () {
+            $('.covFlow h3').text(h3);
+            $('.covFlow p').text(p);
+            $('.covFlow h1').text(price + " zł");
+        });
+
+        $('#previousImgWrap').fadeOut(function () {
+            if(mainImgId-2 >= 0){
+                $('#previousImgWrap .img-responsive').attr('src', imgSrcPrev);}
+        });
+        if(mainImgId == json.images.length-1){$('#nextImgWrap ').delay(400).fadeIn(500);}
+        else{$('#nextImgWrap').fadeIn(500);}
+        $('#mainImgCol').fadeIn();
+        $('#mainCapCol').fadeIn();
+        if(mainImgId-2 >= 0){$('#previousImgWrap').fadeIn(500);}
+
+        mainImgId--;
+});
+
+
+    function loadCoverFlow(mainThumId) {
     if(mainThumId-1 >= 0) {
         var prevImg = document.createElement('img');
         prevImg.className = 'img-responsive';
@@ -155,8 +205,8 @@ function loadCoverFlow(mainThumId) {
     prevImgCol.className = 'col-xs-3';
     prevImgCol.id = 'previousImgCol';
 
-    var prevId = document.createElement('div');
-    prevId.id = mainThumId-1;
+    var prevImgWrap = document.createElement('div');
+    prevImgWrap.id = 'previousImgWrap';
 
     var mainImgCol = document.createElement('div');
     mainImgCol.className = 'col-xs-6';
@@ -166,8 +216,9 @@ function loadCoverFlow(mainThumId) {
     nextImgCol.className = 'col-xs-3';
     nextImgCol.id = 'nextImgCol';
 
-    var nextId = document.createElement('div');
-    nextId.id = mainThumId+1;
+
+    var nextImgWrap = document.createElement('div');
+    nextImgWrap.id = 'nextImgWrap';
 
     var mainImg = document.createElement('img');
     mainImg.className = 'img-responsive';
@@ -206,17 +257,17 @@ function loadCoverFlow(mainThumId) {
     var mainRow = document.getElementById("main-row");
     mainRow.appendChild(prevImgCol);
     if(mainThumId-1 >= 0) {
-        prevImgCol.appendChild(prevId);
-        prevId.appendChild(prevImg);
-        prevId.appendChild(arrowPrev);
+        prevImgCol.appendChild(prevImgWrap);
+        prevImgWrap.appendChild(prevImg)
+        prevImgWrap.appendChild(arrowPrev);
     }
     mainRow.appendChild(mainImgCol);
     mainImgCol.appendChild(mainImg);
     mainRow.appendChild(nextImgCol);
     if(mainThumId+1 < json.images.length) {
-        nextImgCol.appendChild(nextId);
-        nextId.appendChild(nextImg);
-        nextId.appendChild(arrowNext);
+        nextImgCol.appendChild(nextImgWrap);
+        nextImgWrap.appendChild(nextImg)
+        nextImgWrap.appendChild(arrowNext);
     }
     mainRow.appendChild(prevCapCol);
     mainRow.appendChild(mainCapCol);
@@ -225,5 +276,6 @@ function loadCoverFlow(mainThumId) {
     capCovFlow.appendChild(capCov);
     capCovFlow.appendChild(capCovPrice);
     mainRow.appendChild(nextCapCol);
-    }
+}
+
 }());
