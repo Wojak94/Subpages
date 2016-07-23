@@ -283,20 +283,22 @@ body {
 
 #bid-input{
     float: left;
-    width: 35%;
+    width: 100%;
     border: solid;
     border-color: #3e3f3a;
     border-width: 1px;
+    margin-bottom: 10px;
 }
 
 #bid-button{
     float: right;
-    width: 35%;
+    width: 100%;
     height: 48px;
     border: solid;
     border-color: #3e3f3a;
     border-width: 1px;
     transition: all 0.5s ease;
+    margin-bottom: 10px;
 
 }
 
@@ -394,13 +396,6 @@ body {
         padding-left: 0;
     }
 
-    #bid-input{
-
-    }
-
-    #bid-button{
-
-    }
 
 }
 

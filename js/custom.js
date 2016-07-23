@@ -292,15 +292,15 @@ $('#main-content').on('click','#previousImgCol .img-responsive', function () {
     bidSection.id = 'bidSection';
 
     var leftBid = document.createElement('div');
-    leftBid.className = 'col-xs-3';
+    leftBid.className = 'col-xs-hidden col-md-3';
     leftBid.id = 'leftBid';
 
     var mainBid = document.createElement('div');
-    mainBid.className = 'col-xs-6';
+    mainBid.className = 'col-xs-12 col-md-3';
     mainBid.id = 'mainBid';
 
     var rightBid = document.createElement('div');
-    rightBid.className = 'col-xs-3';
+    rightBid.className = 'col-xs-hidden col-md-3';
     rightBid.id = 'rightBid';
 
     var inputGroup = document.createElement('div');
@@ -314,6 +314,10 @@ $('#main-content').on('click','#previousImgCol .img-responsive', function () {
     var spanInput = document.createElement('span');
     spanInput.className = 'input-group-addon';
     spanInput.innerHTML = "PLN";
+
+    var bidBtnWrap = document.createElement('div');
+    bidBtnWrap.className = 'col-xs-12 col-md-3';
+    bidBtnWrap.id = 'bid-btn';
 
     var buttonBid = document.createElement('button');
     buttonBid.type = 'button';
@@ -349,8 +353,10 @@ $('#main-content').on('click','#previousImgCol .img-responsive', function () {
     mainBid.appendChild(inputGroup);
     inputGroup.appendChild(input);
     inputGroup.appendChild(spanInput);
-    mainBid.appendChild(buttonBid);
+    bidSection.appendChild(bidBtnWrap);
+    bidBtnWrap.appendChild(buttonBid);
     buttonBid.appendChild(h4BtnBid);
+    bidSection.appendChild(rightBid);
 }
 
 }());
