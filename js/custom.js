@@ -69,12 +69,45 @@ var json = {"images": [
 var mainImgId = 0;
 
 $(document).ready(function () {
-    $('#metro').fadeIn(1000).removeClass('hidden');
+    $('#mainContentWrap').fadeIn(1000).removeClass('hidden');
 });
 
-window.onload = function drawAuctions(){
+var oPageInfo = {
+    title: null,
+    url: location.href
+};
+
+
+window.addEventListener("popstate", function(e) {
+
+    // URL location
+    oPageInfo.url = document.location;
+
+    drawAuctions();
+    $('#mainContentWrap').fadeIn(1000).removeClass('hidden');
+
+});
+
+function drawAuctions(){
+
+if($('#main-row').length){
+    $('#main-row').fadeOut(300, function(){
+        $.get('./subpage1.html', function(data) {
+            // var $data = $(data);
+            // $data = $data.find('#main-content');
+            $('#main-row').remove();
+        });
+    })}
+
+        var mainContentWrap = document.createElement('div');
+        mainContentWrap.className = 'hidden';
+        mainContentWrap.id = 'mainContentWrap';
+
+        var container = document.getElementById("main-content");
+        container.appendChild(mainContentWrap);
 
     for(var i=0; i<json.images.length; i++) {
+
         var thumb = document.createElement('div');
         thumb.className = 'thumbnail col-xs-12 col-sm-4 col-md-3 text-center';
         thumb.id = i;
@@ -98,8 +131,8 @@ window.onload = function drawAuctions(){
         var p2 = document.createElement('p');
         p2.innerHTML = json.images[i].captionHover;
 
-        var metro = document.getElementById("metro");
-        metro.appendChild(thumb);
+
+        mainContentWrap.appendChild(thumb);
         thumb.appendChild(img);
         thumb.appendChild(cap);
         cap.appendChild(h4);
@@ -107,21 +140,24 @@ window.onload = function drawAuctions(){
         capHov.appendChild(h4Hov);
         capHov.appendChild(p2);
     }
-};
+}
 
-$('#metro').on('click', '.thumbnail', function () {
+window.onload = drawAuctions();
+
+$('#main-content').on('click', '.thumbnail', function () {
     mainImgId = parseInt(jQuery(this).attr('id'));
 
-    $('#metro').fadeOut( function(){
+    $('#mainContentWrap').fadeOut( function(){
         $.get('./subpage2.html', function(data) {
             var $data = $(data);
             $data = $data.find('#main-row');
-            $('#metro').replaceWith($data);
+            $('#mainContentWrap').replaceWith($data);
             loadCoverFlow(mainImgId);
         });
     });
-
+    history.pushState(oPageInfo, oPageInfo.title, oPageInfo.url + '#coverFlow');
 });
+
 
 $('#main-content').on('click','#nextImgCol .img-responsive', function () {
         var imgSrcPrev = json.images[mainImgId].src;
