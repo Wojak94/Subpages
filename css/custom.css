@@ -7,6 +7,8 @@
 body {
     /*background-color: #e3e2c7;*/
 }
+
+
 /*  IMAGE AND CAPTION */
 
 .thumbnail {
@@ -95,6 +97,7 @@ body {
 /*  SUBPAGE 2 */
 
 #main-row{
+    position: absolute;
     height: 300px;
     transform-origin: 0 100%;
 }
@@ -153,7 +156,6 @@ body {
     opacity: 0.6;
     float: right;
     box-shadow:0 8px 10px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    z-index: 1;
 }
 
 
@@ -161,8 +163,6 @@ body {
 #previousImgCol{
     height: 100%;
     position: relative;
-
-
 }
 
 #previousImgWrap{
@@ -251,14 +251,16 @@ body {
 }
 
 #mainCapCol{
-    height: inherit;
-
+    height: auto;
     position: relative;
     text-align: center;
+    display: table;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .caption.covFlow{
-    position: absolute;
+    position: relative;
     z-index: -2;
     top: 10px;
     width: 70%;
@@ -266,6 +268,7 @@ body {
     margin-right: -50%;
     transform: translate(-50%, 0);
     background: white;
+    display: table-row;
 }
 
 .caption.covFlow h5{
@@ -275,8 +278,36 @@ body {
 
 .caption.covFlow p{
     color: #535246;
+
 }
 
+#bid-input{
+    float: left;
+    width: 35%;
+    border: solid;
+    border-color: #3e3f3a;
+    border-width: 1px;
+}
+
+#bid-button{
+    float: right;
+    width: 35%;
+    height: 48px;
+    border: solid;
+    border-color: #3e3f3a;
+    border-width: 1px;
+    transition: all 0.5s ease;
+
+}
+
+#bid-button h4{
+    margin-top: 10px;
+    transform: translate(0, -50%)
+}
+
+#bid-button:hover{
+
+}
 
 
 /* NAVBAR-TOP, SIDEBAR AND MAIN CONTENT */
@@ -363,6 +394,13 @@ body {
         padding-left: 0;
     }
 
+    #bid-input{
+
+    }
+
+    #bid-button{
+
+    }
 
 }
 
