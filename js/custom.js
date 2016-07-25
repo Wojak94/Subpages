@@ -138,7 +138,6 @@ if($('#mainContentWrap').length){                                               
         var p2 = document.createElement('p');
         p2.innerHTML = json.images[i].captionHover;
 
-
         mainContentWrap.appendChild(thumb);
         thumb.appendChild(img);
         thumb.appendChild(cap);
