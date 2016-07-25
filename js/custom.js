@@ -1,11 +1,12 @@
 (function () {
     'use strict';
 
+//-------------------------------------------------------------------Disable caching of AJAX responses
 $.ajaxSetup ({
-    // Disable caching of AJAX responses
     cache: false
 });
 
+//-------------------------------------------------------------------Json that stores auctions objects
 var json = {"images": [
     {
         "src": "./img/death-breath.jpg",
@@ -65,41 +66,47 @@ var json = {"images": [
     }
 ]};
 
-
+//-------------------------------------------------------------------Variable that stores currently selected image
 var mainImgId = 0;
 
-$(document).ready(function () {
-    $('#mainContentWrap').fadeIn(1000).removeClass('hidden');
+//-------------------------------------------------------------------Dynamically drawing set of auctions on page load
+window.onload = drawAuctions();
+
+//-------------------------------------------------------------------Listener of browser history manipulation by user
+window.addEventListener("popstate", function(event) {
+    if(event.state == null){                                                        //if state of history object is null draw main page
+        drawAuctions();
+    }
+    else {
+        var stateObject = event.state;
+
+        if ((stateObject.url).indexOf('covFlow') != -1){                            //else check url stored in history.state if it contains 'covFlow' substring
+            var imgId = (stateObject.url).charAt(stateObject.url.length - 1);       //if so, gather last char which is auction number
+            loadCoverFlow(imgId);                                                   //and pass it to Coverflow drawing function
+        }
+    }
 });
 
-var oPageInfo = {
-    title: null,
-    url: location.href
-};
-
-
-window.addEventListener("popstate", function(e) {
-
-    // URL location
-    oPageInfo.url = document.location;
-
-    drawAuctions();
-    $('#mainContentWrap').fadeIn(1000).removeClass('hidden');
-
+//-------------------------------------------------------------------Logo button click handler
+$("#logoBtn").click(function(e) {
+    e.preventDefault();                                                             //prevent changing site to href
+    history.pushState(null, null, ' ');                                             //push history state
+    drawAuctions();                                                                 //then draw auctions
 });
 
+//-------------------------------------------------------------------Function drawing auctions on main page
 function drawAuctions(){
 
-if($('#main-row').length){
-    $('#main-row').fadeOut(300, function(){
-        $.get('./subpage1.html', function(data) {
-            // var $data = $(data);
-            // $data = $data.find('#main-content');
+if($('#main-row').length){                                                          //if current page contains #main-row div
+    $('#main-row').fadeOut(300, function(){                                         //which means its Coverflow page, remove it
             $('#main-row').remove();
-        });
-    })}
+})}
 
-        var mainContentWrap = document.createElement('div');
+if($('#mainContentWrap').length){                                                   //if current page contains its already main page
+        location.reload();                                                          //reload it
+        return;
+}
+       var mainContentWrap = document.createElement('div');
         mainContentWrap.className = 'hidden';
         mainContentWrap.id = 'mainContentWrap';
 
@@ -140,25 +147,179 @@ if($('#main-row').length){
         capHov.appendChild(h4Hov);
         capHov.appendChild(p2);
     }
+    $(document).ready(function () {
+        $('#mainContentWrap').fadeIn(1000).removeClass('hidden');
+    });
 }
 
-window.onload = drawAuctions();
-
+//-------------------------------------------------------------------Click on auction thumbnail event handler
 $('#main-content').on('click', '.thumbnail', function () {
     mainImgId = parseInt(jQuery(this).attr('id'));
 
     $('#mainContentWrap').fadeOut( function(){
-        $.get('./subpage2.html', function(data) {
-            var $data = $(data);
-            $data = $data.find('#main-row');
-            $('#mainContentWrap').replaceWith($data);
-            loadCoverFlow(mainImgId);
-        });
+        loadCoverFlow(mainImgId);
     });
-    history.pushState(oPageInfo, oPageInfo.title, oPageInfo.url + '#coverFlow');
+    history.pushState({url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
 });
 
 
+//-------------------------------------------------------------------Coveflow drawing function
+    function loadCoverFlow(Id) {
+        var mainThumId = parseInt(Id);
+
+        var prevImg = document.createElement('img');
+        var arrowPrev = document.createElement('div');
+
+        if(mainThumId-1 >= 0){
+            prevImg.src = json.images[mainThumId - 1].src;
+            prevImg.className = 'img-responsive';
+            arrowPrev.className = 'arrowPrev';
+        }
+        else {
+            prevImg.src = '';
+            prevImg.className = 'img-responsive hidden';
+            arrowPrev.className = 'arrowPrev hidden';
+        }
+
+        var nextImg = document.createElement('img');
+        var arrowNext = document.createElement('div');
+
+
+        if(mainThumId+1 < json.images.length){
+            nextImg.src = json.images[mainThumId + 1].src;
+            nextImg.className = 'img-responsive';
+            arrowNext.className = 'arrowNext';
+        }
+        else{
+            nextImg.src = '';
+            nextImg.className = 'img-responsive hidden';
+            arrowNext.className = 'arrowNext hidden';
+        }
+
+        var prevImgCol = document.createElement('div');
+        prevImgCol.className = 'col-xs-3';
+        prevImgCol.id = 'previousImgCol';
+
+        var prevImgWrap = document.createElement('div');
+        prevImgWrap.id = 'previousImgWrap';
+
+        var mainImgCol = document.createElement('div');
+        mainImgCol.className = 'col-xs-6';
+        mainImgCol.id = 'mainImgCol';
+
+        var nextImgCol = document.createElement('div');
+        nextImgCol.className = 'col-xs-3';
+        nextImgCol.id = 'nextImgCol';
+
+        var nextImgWrap = document.createElement('div');
+        nextImgWrap.id = 'nextImgWrap';
+
+        var mainImg = document.createElement('img');
+        mainImg.className = 'img-responsive';
+        mainImg.src = json.images[mainThumId].src;
+
+        var prevCapCol = document.createElement('div');
+        prevCapCol.className = 'col-xs-2 col-md-3';
+        prevCapCol.id = 'previousCapCol';
+
+        var mainCapCol = document.createElement('div');
+        mainCapCol.className = 'col-xs-8 col-md-6';
+        mainCapCol.id = 'mainCapCol';
+
+        var nextCapCol = document.createElement('div');
+        nextCapCol.className = 'col-xs-2 col-md-3';
+        nextCapCol.id = 'nextCapCol';
+
+        var capCovFlow = document.createElement('div');
+        capCovFlow.className = 'title covFlow';
+
+        var capCovHead = document.createElement('h3');
+        capCovHead.innerHTML = json.images[mainThumId].title;
+
+        var capCov = document.createElement('p');
+        capCov.innerHTML = json.images[mainThumId].caption;
+
+        var capCovPrice = document.createElement('h1');
+        capCovPrice.innerHTML = json.images[mainThumId].price + " zł";
+
+        var bidSection = document.createElement('div');
+        bidSection.className = 'col-xs-12';
+        bidSection.id = 'bidSection';
+
+        var leftBid = document.createElement('div');
+        leftBid.className = 'col-xs-hidden col-md-3';
+        leftBid.id = 'leftBid';
+
+        var mainBid = document.createElement('div');
+        mainBid.className = 'col-xs-12 col-md-3';
+        mainBid.id = 'mainBid';
+
+        var rightBid = document.createElement('div');
+        rightBid.className = 'col-xs-hidden col-md-3';
+        rightBid.id = 'rightBid';
+
+        var inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group';
+        inputGroup.id = 'bid-input';
+
+        var input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'form-control';
+
+        var spanInput = document.createElement('span');
+        spanInput.className = 'input-group-addon';
+        spanInput.innerHTML = "PLN";
+
+        var bidBtnWrap = document.createElement('div');
+        bidBtnWrap.className = 'col-xs-12 col-md-3';
+        bidBtnWrap.id = 'bid-btn';
+
+        var buttonBid = document.createElement('button');
+        buttonBid.type = 'button';
+        buttonBid.className = 'btn btn-success';
+        buttonBid.id = 'bid-button';
+
+        var h4BtnBid = document.createElement('h4');
+        h4BtnBid.innerHTML = "LICYTUJ";
+
+        var mainRow = document.createElement('div');
+        mainRow.className = 'row-fluid';
+        mainRow.id = 'main-row';
+
+        var mainContent = document.getElementById('main-content');
+        $(mainContent).empty();
+        mainContent.appendChild(mainRow);
+        mainRow.appendChild(prevImgCol);
+        prevImgCol.appendChild(prevImgWrap);
+        prevImgWrap.appendChild(prevImg);
+        prevImgWrap.appendChild(arrowPrev);
+        mainRow.appendChild(mainImgCol);
+        mainImgCol.appendChild(mainImg);
+        mainRow.appendChild(nextImgCol);
+        nextImgCol.appendChild(nextImgWrap);
+        nextImgWrap.appendChild(nextImg);
+        nextImgWrap.appendChild(arrowNext);
+        mainRow.appendChild(prevCapCol);
+        mainRow.appendChild(mainCapCol);
+        mainCapCol.appendChild(capCovFlow);
+        capCovFlow.appendChild(capCovHead);
+        capCovFlow.appendChild(capCov);
+        capCovFlow.appendChild(capCovPrice);
+        mainRow.appendChild(nextCapCol);
+        mainRow.appendChild(bidSection);
+        bidSection.appendChild(leftBid);
+        bidSection.appendChild(mainBid);
+        mainBid.appendChild(inputGroup);
+        inputGroup.appendChild(input);
+        inputGroup.appendChild(spanInput);
+        bidSection.appendChild(bidBtnWrap);
+        bidBtnWrap.appendChild(buttonBid);
+        buttonBid.appendChild(h4BtnBid);
+        bidSection.appendChild(rightBid);
+    }
+}());
+
+//-------------------------------------------------------------------Click on next image in Coverflow event handler
 $('#main-content').on('click','#nextImgCol .img-responsive', function () {
         var imgSrcPrev = json.images[mainImgId].src;
         var imgSrc = json.images[mainImgId+1].src;
@@ -198,8 +359,10 @@ $('#main-content').on('click','#nextImgCol .img-responsive', function () {
          $('#bidSection').fadeIn(500);
 
         mainImgId++;
+        history.replaceState({ url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
 });
 
+//-------------------------------------------------------------------Click on previous image in Coverflow event handler
 $('#main-content').on('click','#previousImgCol .img-responsive', function () {
         if(mainImgId-2 >= 0){
             var imgSrcPrev = json.images[mainImgId -2].src;}
@@ -238,161 +401,7 @@ $('#main-content').on('click','#previousImgCol .img-responsive', function () {
         if(mainImgId-2 >= 0){$('#previousImgWrap').fadeIn(500);}
         $('#bidSection').fadeIn(500);
 
-
         mainImgId--;
+        history.replaceState({url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
 });
 
-
-    function loadCoverFlow(mainThumId) {
-
-        var prevImg = document.createElement('img');
-        var arrowPrev = document.createElement('div');
-
-
-
-    if(mainThumId-1 >= 0){
-        prevImg.src = json.images[mainThumId - 1].src;
-        prevImg.className = 'img-responsive';
-        arrowPrev.className = 'arrowPrev';
-    }
-    else {
-        prevImg.src = '';
-        prevImg.className = 'img-responsive hidden';
-        arrowPrev.className = 'arrowPrev hidden';
-    }
-
-        var nextImg = document.createElement('img');
-        var arrowNext = document.createElement('div');
-
-
-    if(mainThumId+1 < json.images.length){
-        nextImg.src = json.images[mainThumId + 1].src;
-        nextImg.className = 'img-responsive';
-        arrowNext.className = 'arrowNext';
-
-    }
-    else{
-        nextImg.src = '';
-        nextImg.className = 'img-responsive hidden';
-        arrowNext.className = 'arrowNext hidden';
-    }
-
-    var prevImgCol = document.createElement('div');
-    prevImgCol.className = 'col-xs-3';
-    prevImgCol.id = 'previousImgCol';
-
-    var prevImgWrap = document.createElement('div');
-    prevImgWrap.id = 'previousImgWrap';
-
-    var mainImgCol = document.createElement('div');
-    mainImgCol.className = 'col-xs-6';
-    mainImgCol.id = 'mainImgCol';
-
-    var nextImgCol = document.createElement('div');
-    nextImgCol.className = 'col-xs-3';
-    nextImgCol.id = 'nextImgCol';
-
-    var nextImgWrap = document.createElement('div');
-    nextImgWrap.id = 'nextImgWrap';
-
-    var mainImg = document.createElement('img');
-    mainImg.className = 'img-responsive';
-    mainImg.src = json.images[mainThumId].src;
-
-    var prevCapCol = document.createElement('div');
-    prevCapCol.className = 'col-xs-2 col-md-3';
-    prevCapCol.id = 'previousCapCol';
-
-    var mainCapCol = document.createElement('div');
-    mainCapCol.className = 'col-xs-8 col-md-6';
-    mainCapCol.id = 'mainCapCol';
-
-    var nextCapCol = document.createElement('div');
-    nextCapCol.className = 'col-xs-2 col-md-3';
-    nextCapCol.id = 'nextCapCol';
-
-    var capCovFlow = document.createElement('div');
-    capCovFlow.className = 'title covFlow';
-
-    var capCovHead = document.createElement('h3');
-    capCovHead.innerHTML = json.images[mainThumId].title;
-
-    var capCov = document.createElement('p');
-    capCov.innerHTML = json.images[mainThumId].caption;
-
-    var capCovPrice = document.createElement('h1');
-    capCovPrice.innerHTML = json.images[mainThumId].price + " zł";
-
-    var bidSection = document.createElement('div');
-    bidSection.className = 'col-xs-12';
-    bidSection.id = 'bidSection';
-
-    var leftBid = document.createElement('div');
-    leftBid.className = 'col-xs-hidden col-md-3';
-    leftBid.id = 'leftBid';
-
-    var mainBid = document.createElement('div');
-    mainBid.className = 'col-xs-12 col-md-3';
-    mainBid.id = 'mainBid';
-
-    var rightBid = document.createElement('div');
-    rightBid.className = 'col-xs-hidden col-md-3';
-    rightBid.id = 'rightBid';
-
-    var inputGroup = document.createElement('div');
-    inputGroup.className = 'input-group';
-    inputGroup.id = 'bid-input';
-
-    var input = document.createElement('input');
-    input.type = 'number';
-    input.className = 'form-control';
-
-    var spanInput = document.createElement('span');
-    spanInput.className = 'input-group-addon';
-    spanInput.innerHTML = "PLN";
-
-    var bidBtnWrap = document.createElement('div');
-    bidBtnWrap.className = 'col-xs-12 col-md-3';
-    bidBtnWrap.id = 'bid-btn';
-
-    var buttonBid = document.createElement('button');
-    buttonBid.type = 'button';
-    buttonBid.className = 'btn btn-success';
-    buttonBid.id = 'bid-button';
-
-    var h4BtnBid = document.createElement('h4');
-    h4BtnBid.innerHTML = "LICYTUJ";
-
-
-
-    var mainRow = document.getElementById("main-row");
-    mainRow.appendChild(prevImgCol);
-        prevImgCol.appendChild(prevImgWrap);
-        prevImgWrap.appendChild(prevImg);
-        prevImgWrap.appendChild(arrowPrev);
-    mainRow.appendChild(mainImgCol);
-    mainImgCol.appendChild(mainImg);
-    mainRow.appendChild(nextImgCol);
-        nextImgCol.appendChild(nextImgWrap);
-        nextImgWrap.appendChild(nextImg);
-        nextImgWrap.appendChild(arrowNext);
-    mainRow.appendChild(prevCapCol);
-    mainRow.appendChild(mainCapCol);
-    mainCapCol.appendChild(capCovFlow);
-    capCovFlow.appendChild(capCovHead);
-    capCovFlow.appendChild(capCov);
-    capCovFlow.appendChild(capCovPrice);
-    mainRow.appendChild(nextCapCol);
-    mainRow.appendChild(bidSection);
-    bidSection.appendChild(leftBid);
-    bidSection.appendChild(mainBid);
-    mainBid.appendChild(inputGroup);
-    inputGroup.appendChild(input);
-    inputGroup.appendChild(spanInput);
-    bidSection.appendChild(bidBtnWrap);
-    bidBtnWrap.appendChild(buttonBid);
-    buttonBid.appendChild(h4BtnBid);
-    bidSection.appendChild(rightBid);
-}
-
-}());
