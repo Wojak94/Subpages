@@ -348,9 +348,13 @@ body {
 #navbarSecondWrap .navbar .nav li > a .caret, .tnav .navbar .nav li > a:hover .caret {border-top-color: #fff;border-bottom-color: #fff;}
 #navbarSecondWrap .navbar .nav > li.dropdown.open.active > a:hover {}
 #navbarSecondWrap .navbar .nav > li.dropdown.open > a {color: #fff;background-color: #8e8c84;border-color: #fff; z-index: 100}
+#navbarSecondWrap .navbar .nav > li > .dropdown-menu {background-color: #8e8c84; border: 0; padding: 0}
+#navbarSecondWrap .navbar .nav > li > .dropdown-menu > li > a{color: #fff; transition: all 0.3s ease}
+#navbarSecondWrap .navbar .nav > li > .dropdown-menu > li > a:hover{background-color:#79a736; color: #fff; }
 #navbarSecondWrap .navbar .nav > li.dropdown.open.active > a:hover .caret, .tnav .navbar .nav > li.dropdown.open > a .caret {border-top-color: #fff;}
 #navbarSecondWrap .navbar .navbar-brand {color:#fff;}
 #navbarSecondWrap .navbar .nav.pull-right {margin-left: 10px; margin-right: 0;}
+
 .navbar-xs #navbarSecondWrap .navbar { min-height:28px; height: 28px; }
 .navbar-xs #navbarSecondWrap .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 28px; }
 .navbar-xs #navbarSecondWrap .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 28px; }
@@ -362,6 +366,7 @@ body {
     width: 100%;
     height: 40px;
     z-index: 1000;
+    position: fixed;
 }
 #navbarSecondWrap{
     height: inherit;
@@ -371,7 +376,6 @@ body {
 #navSecond{
     text-align: left;
     display: inline-block;
-
 }
 
 #wrapper {
