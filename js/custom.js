@@ -74,7 +74,7 @@ window.onload = drawAuctions();
 
 //-------------------------------------------------------------------Listener of browser history manipulation by user
 window.addEventListener("popstate", function(event) {
-    if(event.state == null){                                                        //if state of history object is null draw main page
+    if(event.state == null){                                                        //if state object of history is null draw main page
         drawAuctions();
     }
     else {
@@ -102,12 +102,12 @@ if($('#main-row').length){                                                      
             $('#main-row').remove();
 })}
 
-if($('#mainContentWrap').length){                                                   //if current page contains its already main page
-        location.reload();                                                          //reload it
+if($('#mainContentWrap').length){                                                   //if current page contains it, its already main page
+        location.reload();                                                          //so just reload it
         return;
 }
        var mainContentWrap = document.createElement('div');
-        mainContentWrap.className = 'hidden';
+        mainContentWrap.className = 'hidden';                                       //setting
         mainContentWrap.id = 'mainContentWrap';
 
         var container = document.getElementById("main-content");
@@ -115,8 +115,11 @@ if($('#mainContentWrap').length){                                               
 
     for(var i=0; i<json.images.length; i++) {
 
+        var thumbCol = document.createElement('div');
+        thumbCol.className = 'col-xs-12 col-sm-4 col-md-3 thumbCol';
+
         var thumb = document.createElement('div');
-        thumb.className = 'thumbnail col-xs-12 col-sm-4 col-md-3 text-center';
+        thumb.className = 'thumbnail text-center';
         thumb.id = i;
 
         var img = document.createElement('img');
@@ -138,13 +141,18 @@ if($('#mainContentWrap').length){                                               
         var p2 = document.createElement('p');
         p2.innerHTML = json.images[i].captionHover;
 
-        mainContentWrap.appendChild(thumb);
+        var shadow = document.createElement('div');
+        shadow.className = 'shadow';
+
+        mainContentWrap.appendChild(thumbCol);
+        thumbCol.appendChild(thumb);
         thumb.appendChild(img);
         thumb.appendChild(cap);
         cap.appendChild(h4);
         thumb.appendChild(capHov);
         capHov.appendChild(h4Hov);
         capHov.appendChild(p2);
+        thumb.appendChild(shadow);
     }
     $(document).ready(function () {
         $('#mainContentWrap').fadeIn(1000).removeClass('hidden');
@@ -218,15 +226,15 @@ $('#main-content').on('click', '.thumbnail', function () {
         mainImg.src = json.images[mainThumId].src;
 
         var prevCapCol = document.createElement('div');
-        prevCapCol.className = 'col-xs-2 col-md-3';
+        prevCapCol.className = 'col-xs-1 col-md-3';
         prevCapCol.id = 'previousCapCol';
 
         var mainCapCol = document.createElement('div');
-        mainCapCol.className = 'col-xs-8 col-md-6';
+        mainCapCol.className = 'col-xs-10 col-md-6';
         mainCapCol.id = 'mainCapCol';
 
         var nextCapCol = document.createElement('div');
-        nextCapCol.className = 'col-xs-2 col-md-3';
+        nextCapCol.className = 'col-xs-1 col-md-3';
         nextCapCol.id = 'nextCapCol';
 
         var capCovFlow = document.createElement('div');
@@ -316,7 +324,7 @@ $('#main-content').on('click', '.thumbnail', function () {
         buttonBid.appendChild(h4BtnBid);
         bidSection.appendChild(rightBid);
     }
-}());
+
 
 //-------------------------------------------------------------------Click on next image in Coverflow event handler
 $('#main-content').on('click','#nextImgCol .img-responsive', function () {
@@ -404,3 +412,17 @@ $('#main-content').on('click','#previousImgCol .img-responsive', function () {
         history.replaceState({url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+}());

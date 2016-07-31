@@ -11,11 +11,27 @@ body {
 
 /*  IMAGE AND CAPTION */
 
+.thumbCol {
+    padding: 0;
+}
+
 .thumbnail {
+    position: relative;
     border: 0 none;
-    box-shadow: none;
     padding:0;
     overflow: hidden;
+
+}
+
+
+.shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 20px inset;
+    top: 0;
+    left: 0;
+
 }
 
 
@@ -97,7 +113,7 @@ body {
 /*  SUBPAGE 2 */
 
 #main-row{
-    position: absolute;
+    position: relative;
     height: 300px;
     transform-origin: 0 100%;
 }
@@ -298,80 +314,78 @@ body {
     border-color: #3e3f3a;
     border-width: 1px;
     transition: all 0.5s ease;
-    margin-bottom: 10px;
-
+    background: linear-gradient(to bottom, #79a736 0%, #516f26 100%);
+    opacity: 1;
 }
 
 #bid-button h4{
     margin-top: 10px;
-    transform: translate(0, -50%)
-}
-
-#bid-button:hover{
-
-}
-
-
-/* NAVBAR-TOP, SIDEBAR AND MAIN CONTENT */
-
-#navbar-top {
-    margin: 0;
-}
-
-#wrapper {
-    margin-top: 61px;
-}
-
-#sidebar-wrapper {
-    margin-left: -250px;
-    left: 250px;
-    width: 250px;
-    position: fixed;
-    height: 100%;
-    overflow-y: auto;
-    z-index: 1000;
-
-
-}
-
-.well {
-    padding-left: 0;
-    margin-left: auto;
-    border-left: 0;
-    left: 0;
-}
-
-#sidebar{
-    height: 100%;
-    width: 250px;
-    margin: 0;
-    padding-right: 0;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    background-color: #3e3f3a;
-
-    position: absolute;
-
-}
-
-.nav > li > a{
+    transform: translate(0, -50%);
+    color: rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
     transition: all 0.5s ease;
 }
 
-.nav > li > a:hover{
-    background-color: #2a2b26;
-    border-color: transparent;
+
+#bid-button:hover h4{
+    color: white;
+    text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
+}
+
+/* NAVBAR-TOP, SIDEBAR AND MAIN CONTENT */
+
+#navFirst{
+    z-index: 1000;
+    height: 60px;
+}
+
+#navbarSecondWrap .navbar { background: #79a736; border-bottom:none;  }
+#navbarSecondWrap .navbar .nav  {text-align: center}
+#navbarSecondWrap .navbar .nav > li {}
+#navbarSecondWrap .navbar .nav > li > a {color: #fff; transition: all 0.5s ease; min-width: 80px; }
+#navbarSecondWrap .navbar .nav > li > a:hover {color: #fff; background-color: #93c54b;}
+#navbarSecondWrap .navbar .nav .active > a,.navbar .nav .active > a:hover {color: #fff; background-color: #57792a;}
+#navbarSecondWrap .navbar .nav li > a .caret, .tnav .navbar .nav li > a:hover .caret {border-top-color: #fff;border-bottom-color: #fff;}
+#navbarSecondWrap .navbar .nav > li.dropdown.open.active > a:hover {}
+#navbarSecondWrap .navbar .nav > li.dropdown.open > a {color: #fff;background-color: #8e8c84;border-color: #fff; z-index: 100}
+#navbarSecondWrap .navbar .nav > li.dropdown.open.active > a:hover .caret, .tnav .navbar .nav > li.dropdown.open > a .caret {border-top-color: #fff;}
+#navbarSecondWrap .navbar .navbar-brand {color:#fff;}
+#navbarSecondWrap .navbar .nav.pull-right {margin-left: 10px; margin-right: 0;}
+.navbar-xs #navbarSecondWrap .navbar { min-height:28px; height: 28px; }
+.navbar-xs #navbarSecondWrap .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 28px; }
+.navbar-xs #navbarSecondWrap .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 28px; }
+.navbar-sm #navbarSecondWrap .navbar { min-height:40px; height: 40px; }
+.navbar-sm #navbarSecondWrap .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 40px; }
+.navbar-sm #navbarSecondWrap .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 40px; }
+
+#navMin {
+    width: 100%;
+    height: 40px;
+    z-index: 1000;
+}
+#navbarSecondWrap{
+    height: inherit;
+    text-align: center;
+}
+
+#navSecond{
+    text-align: left;
+    display: inline-block;
 
 }
 
+#wrapper {
+    margin-top: 90px;
+}
+
 #page-content-wrapper{
-    position: relative;
     width: 100%;
 }
 
 #main-content {
-    padding-top: 50px;
+    padding-top: 0px;
     padding-bottom: 50px;
+    margin: 0 auto;
 }
 
 /* 'LOGGED AS..' TEXT */
@@ -392,11 +406,6 @@ body {
 
     }
 
-    #wrapper{
-        padding-left: 0;
-    }
-
-
 }
 
 @media (min-width: 768px) {
@@ -406,9 +415,10 @@ body {
         height: 200px;
     }
 
-    #wrapper{
-        padding-left: 250px;
+    #main-content{
+        width: 90%;
     }
+
 }
 
 @media (min-width: 992px) {
