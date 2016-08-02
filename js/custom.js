@@ -67,7 +67,7 @@ var json = {"images": [
 ]};
 
 //-------------------------------------------------------------------Variable that stores currently selected image
-var mainImgId = 0;
+var mainId = 0;
 
 //-------------------------------------------------------------------Dynamically drawing set of auctions on page load
 window.onload = drawAuctions();
@@ -161,69 +161,361 @@ if($('#mainContentWrap').length){                                               
 
 //-------------------------------------------------------------------Click on auction thumbnail event handler
 $('#main-content').on('click', '.thumbnail', function () {
-    mainImgId = parseInt(jQuery(this).attr('id'));
+    mainId = parseInt(jQuery(this).attr('id'));
 
     $('#mainContentWrap').fadeOut( function(){
-        loadCoverFlow(mainImgId);
+        loadCoverFlow(mainId);
     });
-    history.pushState({url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
+    history.pushState({url: '#covFlow' + mainId}, null, '#covFlow' + mainId);
 });
 
 
 //-------------------------------------------------------------------Coveflow drawing function
-    function loadCoverFlow(Id) {
-        var mainThumId = parseInt(Id);
+//     function loadCoverFlow(Id) {
+//         var mainThumId = parseInt(Id);
+//
+//         var prevImg = document.createElement('img');
+//         var arrowPrev = document.createElement('div');
+//
+//         if(mainThumId-1 >= 0){
+//             prevImg.src = json.images[mainThumId - 1].src;
+//             prevImg.className = 'img-responsive';
+//             arrowPrev.className = 'arrowPrev';
+//         }
+//         else {
+//             prevImg.src = '';
+//             prevImg.className = 'img-responsive hidden';
+//             arrowPrev.className = 'arrowPrev hidden';
+//         }
+//
+//         var nextImg = document.createElement('img');
+//         var arrowNext = document.createElement('div');
+//
+//
+//         if(mainThumId+1 < json.images.length){
+//             nextImg.src = json.images[mainThumId + 1].src;
+//             nextImg.className = 'img-responsive';
+//             arrowNext.className = 'arrowNext';
+//         }
+//         else{
+//             nextImg.src = '';
+//             nextImg.className = 'img-responsive hidden';
+//             arrowNext.className = 'arrowNext hidden';
+//         }
+//
+//         var prevImgCol = document.createElement('div');
+//         prevImgCol.className = 'col-xs-3';
+//         prevImgCol.id = 'previousImgCol';
+//
+//         var prevImgWrap = document.createElement('div');
+//         prevImgWrap.id = 'previousImgWrap';
+//
+//         var mainImgCol = document.createElement('div');
+//         mainImgCol.className = 'col-xs-6';
+//         mainImgCol.id = 'mainImgCol';
+//
+//         var nextImgCol = document.createElement('div');
+//         nextImgCol.className = 'col-xs-3';
+//         nextImgCol.id = 'nextImgCol';
+//
+//         var nextImgWrap = document.createElement('div');
+//         nextImgWrap.id = 'nextImgWrap';
+//
+//         var mainImg = document.createElement('img');
+//         mainImg.className = 'img-responsive';
+//         mainImg.src = json.images[mainThumId].src;
+//
+//         var prevCapCol = document.createElement('div');
+//         prevCapCol.className = 'col-xs-1 col-md-3';
+//         prevCapCol.id = 'previousCapCol';
+//
+//         var mainCapCol = document.createElement('div');
+//         mainCapCol.className = 'col-xs-10 col-md-6';
+//         mainCapCol.id = 'mainCapCol';
+//
+//         var nextCapCol = document.createElement('div');
+//         nextCapCol.className = 'col-xs-1 col-md-3';
+//         nextCapCol.id = 'nextCapCol';
+//
+//         var capCovFlow = document.createElement('div');
+//         capCovFlow.className = 'title covFlow';
+//
+//         var capCovHead = document.createElement('h3');
+//         capCovHead.innerHTML = json.images[mainThumId].title;
+//
+//         var capCov = document.createElement('p');
+//         capCov.innerHTML = json.images[mainThumId].caption;
+//
+//         var capCovPrice = document.createElement('h1');
+//         capCovPrice.innerHTML = json.images[mainThumId].price + " zł";
+//
+//         var bidSection = document.createElement('div');
+//         bidSection.className = 'col-xs-12';
+//         bidSection.id = 'bidSection';
+//
+//         var leftBid = document.createElement('div');
+//         leftBid.className = 'col-xs-hidden col-md-3';
+//         leftBid.id = 'leftBid';
+//
+//         var mainBid = document.createElement('div');
+//         mainBid.className = 'col-xs-12 col-md-3';
+//         mainBid.id = 'mainBid';
+//
+//         var rightBid = document.createElement('div');
+//         rightBid.className = 'col-xs-hidden col-md-3';
+//         rightBid.id = 'rightBid';
+//
+//         var inputGroup = document.createElement('div');
+//         inputGroup.className = 'input-group';
+//         inputGroup.id = 'bid-input';
+//
+//         var input = document.createElement('input');
+//         input.type = 'number';
+//         input.className = 'form-control';
+//
+//         var spanInput = document.createElement('span');
+//         spanInput.className = 'input-group-addon';
+//         spanInput.innerHTML = "PLN";
+//
+//         var bidBtnWrap = document.createElement('div');
+//         bidBtnWrap.className = 'col-xs-12 col-md-3';
+//         bidBtnWrap.id = 'bid-btn';
+//
+//         var buttonBid = document.createElement('button');
+//         buttonBid.type = 'button';
+//         buttonBid.className = 'btn btn-success';
+//         buttonBid.id = 'bid-button';
+//
+//         var h4BtnBid = document.createElement('h4');
+//         h4BtnBid.innerHTML = "LICYTUJ";
+//
+//         var mainRow = document.createElement('div');
+//         mainRow.className = 'row-fluid';
+//         mainRow.id = 'main-row';
+//
+//         var mainContent = document.getElementById('main-content');
+//         $(mainContent).empty();
+//         mainContent.appendChild(mainRow);
+//         mainRow.appendChild(prevImgCol);
+//         prevImgCol.appendChild(prevImgWrap);
+//         prevImgWrap.appendChild(prevImg);
+//         prevImgWrap.appendChild(arrowPrev);
+//         mainRow.appendChild(mainImgCol);
+//         mainImgCol.appendChild(mainImg);
+//         mainRow.appendChild(nextImgCol);
+//         nextImgCol.appendChild(nextImgWrap);
+//         nextImgWrap.appendChild(nextImg);
+//         nextImgWrap.appendChild(arrowNext);
+//         mainRow.appendChild(prevCapCol);
+//         mainRow.appendChild(mainCapCol);
+//         mainCapCol.appendChild(capCovFlow);
+//         capCovFlow.appendChild(capCovHead);
+//         capCovFlow.appendChild(capCov);
+//         capCovFlow.appendChild(capCovPrice);
+//         mainRow.appendChild(nextCapCol);
+//         mainRow.appendChild(bidSection);
+//         bidSection.appendChild(leftBid);
+//         bidSection.appendChild(mainBid);
+//         mainBid.appendChild(inputGroup);
+//         inputGroup.appendChild(input);
+//         inputGroup.appendChild(spanInput);
+//         bidSection.appendChild(bidBtnWrap);
+//         bidBtnWrap.appendChild(buttonBid);
+//         buttonBid.appendChild(h4BtnBid);
+//         bidSection.appendChild(rightBid);
+//     }
 
-        var prevImg = document.createElement('img');
-        var arrowPrev = document.createElement('div');
 
-        if(mainThumId-1 >= 0){
-            prevImg.src = json.images[mainThumId - 1].src;
-            prevImg.className = 'img-responsive';
-            arrowPrev.className = 'arrowPrev';
+//-------------------------------------------------------------------Click on next image in Coverflow event handler
+// $('#main-content').on('click','#nextImgCol .img-responsive', function () {
+//         var imgSrcPrev = json.images[mainImgId].src;
+//         var imgSrc = json.images[mainImgId+1].src;
+//     if(mainImgId+2 < json.images.length){
+//         var imgSrcNext = json.images[mainImgId + 2].src;}
+//         var h3 = json.images[mainImgId+1].title;
+//         var p = json.images[mainImgId+1].caption;
+//         var price = json.images[mainImgId+1].price;
+//
+//         $('#previousImgWrap .img-responsive').removeClass('hidden');
+//         $('#previousImgWrap .arrowPrev').removeClass('hidden');
+//
+//
+//         $('#previousImgWrap').fadeOut(function () {
+//         $('#previousImgWrap .img-responsive').attr('src', imgSrcPrev);});
+//
+//         $('#mainImgCol').fadeOut(function () {
+//             $('#mainImgCol .img-responsive').attr('src', imgSrc);});
+//         $('#mainCapCol').fadeOut(function () {
+//             $('.covFlow h3').text(h3);
+//             $('.covFlow p').text(p);
+//             $('.covFlow h1').text(price + " zł");
+//         });
+//
+//         $('#nextImgWrap').fadeOut(function () {
+//             if(mainImgId+2 < json.images.length){
+//             $('#nextImgCol .img-responsive').attr('src', imgSrcNext);}
+//         });
+//
+//         $('#bidSection').fadeOut();
+//
+//         if(mainImgId == 0){$('#previousImgWrap ').delay(400).fadeIn(500);}
+//         else{$('#previousImgWrap ').fadeIn(500);}
+//         $('#mainImgCol').fadeIn();
+//         $('#mainCapCol').fadeIn();
+//         if(mainImgId+2 < json.images.length){$('#nextImgWrap').fadeIn(500);}
+//          $('#bidSection').fadeIn(500);
+//
+//         mainImgId++;
+//         history.replaceState({ url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
+// });
+
+//-------------------------------------------------------------------Click on previous image in Coverflow event handler
+// $('#main-content').on('click','#previousImgCol .img-responsive', function () {
+//         if(mainImgId-2 >= 0){
+//             var imgSrcPrev = json.images[mainImgId -2].src;}
+//         var imgSrc = json.images[mainImgId-1].src;
+//         var imgSrcNext = json.images[mainImgId].src;
+//
+//         var h3 = json.images[mainImgId-1].title;
+//         var p = json.images[mainImgId-1].caption;
+//         var price = json.images[mainImgId-1].price;
+//
+//         $('#nextImgWrap .img-responsive').removeClass('hidden');
+//         $('#nextImgWrap .arrowNext').removeClass('hidden');
+//
+//         $('#nextImgWrap').fadeOut(function () {
+//             $('#nextImgWrap .img-responsive').attr('src', imgSrcNext);});
+//
+//         $('#mainImgCol').fadeOut(function () {
+//             $('#mainImgCol .img-responsive').attr('src', imgSrc);});
+//         $('#mainCapCol').fadeOut(function () {
+//             $('.covFlow h3').text(h3);
+//             $('.covFlow p').text(p);
+//             $('.covFlow h1').text(price + " zł");
+//         });
+//
+//         $('#previousImgWrap').fadeOut(function () {
+//             if(mainImgId-2 >= 0){
+//                 $('#previousImgWrap .img-responsive').attr('src', imgSrcPrev);}
+//         });
+//
+//         $('#bidSection').fadeOut();
+//
+//         if(mainImgId == json.images.length-1){$('#nextImgWrap ').delay(400).fadeIn(500);}
+//         else{$('#nextImgWrap').fadeIn(500);}
+//         $('#mainImgCol').fadeIn();
+//         $('#mainCapCol').fadeIn();
+//         if(mainImgId-2 >= 0){$('#previousImgWrap').fadeIn(500);}
+//         $('#bidSection').fadeIn(500);
+//
+//         mainImgId--;
+//         history.replaceState({url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
+// });
+
+    function loadCoverFlow(id) {
+
+        mainId = id;
+        var prevId = id - 1;
+        var i = 0;
+
+        var mainRow = document.createElement('div');
+        mainRow.className = 'row';
+        mainRow.id = 'main-row';
+
+        var covFlow = document.createElement('div');
+        covFlow.className = 'col-xs-12';
+        covFlow.id = 'covFlow';
+
+        var covList = document.createElement('ul');
+        covList.id = 'covList';
+
+        var mainContent = document.getElementById('main-content');
+        $(mainContent).empty();
+        mainContent.appendChild(mainRow);
+        mainRow.appendChild(covFlow);
+        covFlow.appendChild(covList);
+
+        //---------------------------------------------------------------------------------FirstElements
+
+        if (mainId > 1) {
+
+            for (i; prevId > i; i++) {
+                var listElem = document.createElement('li');
+                $(listElem).css('transform', 'translate3d(0, 0, 0) rotateY(-45deg) scale(0.8)');
+
+                var img = document.createElement('img');
+                img.src = json.images[i].src;
+
+                covList.appendChild(listElem);
+                listElem.appendChild(img);
+            }
         }
-        else {
-            prevImg.src = '';
-            prevImg.className = 'img-responsive hidden';
-            arrowPrev.className = 'arrowPrev hidden';
+
+        //---------------------------------------------------------------------------------PrevElement
+
+        if (mainId > 0) {
+
+            var listElem = document.createElement('li');
+            $(listElem).css('transform', 'translate3d(0, 0, 0) rotateY(-45deg) scale(0.8)');
+            $(listElem).css('opacity', '0.6');
+            $(listElem).css('z-index', '1');
+            listElem.id = 'prev';
+
+            var img = document.createElement('img');
+            img.src = json.images[i].src;
+
+            covList.appendChild(listElem);
+            listElem.appendChild(img);
+            i++;
         }
 
-        var nextImg = document.createElement('img');
-        var arrowNext = document.createElement('div');
+        //---------------------------------------------------------------------------------MainElement
 
+        var listElem = document.createElement('li');
+        $(listElem).css('transform', 'translate3d(100%, 0, 0) rotateY(0deg) scale(1)');
+        $(listElem).css('opacity', '1');
+        $(listElem).css('z-index', '2');
 
-        if(mainThumId+1 < json.images.length){
-            nextImg.src = json.images[mainThumId + 1].src;
-            nextImg.className = 'img-responsive';
-            arrowNext.className = 'arrowNext';
+        var img = document.createElement('img');
+        img.src = json.images[i].src;
+
+        covList.appendChild(listElem);
+        listElem.appendChild(img);
+        i++;
+
+        //---------------------------------------------------------------------------------NextElement
+
+        if (mainId < (json.images.length-1)) {
+
+            var listElem = document.createElement('li');
+            $(listElem).css('transform', 'translate3d(200%, 0, 0) rotateY(45deg) scale(0.8)');
+            $(listElem).css('opacity', '0.6');
+            $(listElem).css('z-index', '1');
+            listElem.id = 'next';
+
+            var img = document.createElement('img');
+            img.src = json.images[i].src;
+
+            covList.appendChild(listElem);
+            listElem.appendChild(img);
+            i++;
         }
-        else{
-            nextImg.src = '';
-            nextImg.className = 'img-responsive hidden';
-            arrowNext.className = 'arrowNext hidden';
+
+        //----------------------------------------------------------------------------------ClosingElements
+
+        if (mainId < (json.images.length-2)) {
+
+            for (i; json.images.length > i; i++) {
+                var listElem = document.createElement('li');
+                $(listElem).css('transform', 'translate3d(200%, 0, 0) rotateY(45deg) scale(0.8)');
+
+                var img = document.createElement('img');
+                img.src = json.images[i].src;
+
+                covList.appendChild(listElem);
+                listElem.appendChild(img);
+            }
         }
-
-        var prevImgCol = document.createElement('div');
-        prevImgCol.className = 'col-xs-3';
-        prevImgCol.id = 'previousImgCol';
-
-        var prevImgWrap = document.createElement('div');
-        prevImgWrap.id = 'previousImgWrap';
-
-        var mainImgCol = document.createElement('div');
-        mainImgCol.className = 'col-xs-6';
-        mainImgCol.id = 'mainImgCol';
-
-        var nextImgCol = document.createElement('div');
-        nextImgCol.className = 'col-xs-3';
-        nextImgCol.id = 'nextImgCol';
-
-        var nextImgWrap = document.createElement('div');
-        nextImgWrap.id = 'nextImgWrap';
-
-        var mainImg = document.createElement('img');
-        mainImg.className = 'img-responsive';
-        mainImg.src = json.images[mainThumId].src;
 
         var prevCapCol = document.createElement('div');
         prevCapCol.className = 'col-xs-1 col-md-3';
@@ -241,13 +533,13 @@ $('#main-content').on('click', '.thumbnail', function () {
         capCovFlow.className = 'title covFlow';
 
         var capCovHead = document.createElement('h3');
-        capCovHead.innerHTML = json.images[mainThumId].title;
+        capCovHead.innerHTML = json.images[mainId].title;
 
         var capCov = document.createElement('p');
-        capCov.innerHTML = json.images[mainThumId].caption;
+        capCov.innerHTML = json.images[mainId].caption;
 
         var capCovPrice = document.createElement('h1');
-        capCovPrice.innerHTML = json.images[mainThumId].price + " zł";
+        capCovPrice.innerHTML = json.images[mainId].price + " zł";
 
         var bidSection = document.createElement('div');
         bidSection.className = 'col-xs-12';
@@ -289,23 +581,6 @@ $('#main-content').on('click', '.thumbnail', function () {
         var h4BtnBid = document.createElement('h4');
         h4BtnBid.innerHTML = "LICYTUJ";
 
-        var mainRow = document.createElement('div');
-        mainRow.className = 'row-fluid';
-        mainRow.id = 'main-row';
-
-        var mainContent = document.getElementById('main-content');
-        $(mainContent).empty();
-        mainContent.appendChild(mainRow);
-        mainRow.appendChild(prevImgCol);
-        prevImgCol.appendChild(prevImgWrap);
-        prevImgWrap.appendChild(prevImg);
-        prevImgWrap.appendChild(arrowPrev);
-        mainRow.appendChild(mainImgCol);
-        mainImgCol.appendChild(mainImg);
-        mainRow.appendChild(nextImgCol);
-        nextImgCol.appendChild(nextImgWrap);
-        nextImgWrap.appendChild(nextImg);
-        nextImgWrap.appendChild(arrowNext);
         mainRow.appendChild(prevCapCol);
         mainRow.appendChild(mainCapCol);
         mainCapCol.appendChild(capCovFlow);
@@ -326,103 +601,126 @@ $('#main-content').on('click', '.thumbnail', function () {
     }
 
 
-//-------------------------------------------------------------------Click on next image in Coverflow event handler
-$('#main-content').on('click','#nextImgCol .img-responsive', function () {
-        var imgSrcPrev = json.images[mainImgId].src;
-        var imgSrc = json.images[mainImgId+1].src;
-    if(mainImgId+2 < json.images.length){
-        var imgSrcNext = json.images[mainImgId + 2].src;}
-        var h3 = json.images[mainImgId+1].title;
-        var p = json.images[mainImgId+1].caption;
-        var price = json.images[mainImgId+1].price;
+//-------------------------------------------------------------------------------------Prev Image Click
 
-        $('#previousImgWrap .img-responsive').removeClass('hidden');
-        $('#previousImgWrap .arrowPrev').removeClass('hidden');
+    $('#main-content').on('click', '#covFlow #prev', function () {
 
+        var prevImg2 = $('#covList > li:nth-child(' + (mainId - 1) + ')');
+        var prevImg = $('#covList > li:nth-child(' + mainId + ')');
+        var mainImg = $('#covList > li:nth-child(' + (mainId + 1) + ')');
+        var nextImg = $('#covList > li:nth-child(' + (mainId + 2) + ')');
 
-        $('#previousImgWrap').fadeOut(function () {
-        $('#previousImgWrap .img-responsive').attr('src', imgSrcPrev);});
+        prevImg2.css('opacity', '0.6');
+        prevImg2.css('z-index', '1');
+        prevImg2.attr('id', 'prev');
 
-        $('#mainImgCol').fadeOut(function () {
-            $('#mainImgCol .img-responsive').attr('src', imgSrc);});
+        prevImg.css('transform', 'translate3d(100%,0,0) rotateY(0) scale(1)');
+        prevImg.css('z-index', '2');
+        prevImg.css('opacity', '1');
+        prevImg.removeAttr('id');
+
+        mainImg.css('transform', 'translate3d(200%,0,0) rotateY(45deg) scale(0.8)');
+        mainImg.css('z-index', '1');
+        mainImg.css('opacity', '0.6');
+        mainImg.attr('id', 'next');
+
+        nextImg.css('opacity', '0');
+        nextImg.css('z-index', '0');
+        nextImg.removeAttr('id');
+
+        mainId--;
+
         $('#mainCapCol').fadeOut(function () {
             $('.covFlow h3').text(h3);
             $('.covFlow p').text(p);
             $('.covFlow h1').text(price + " zł");
         });
-
-        $('#nextImgWrap').fadeOut(function () {
-            if(mainImgId+2 < json.images.length){
-            $('#nextImgCol .img-responsive').attr('src', imgSrcNext);}
-        });
-
         $('#bidSection').fadeOut();
 
-        if(mainImgId == 0){$('#previousImgWrap ').delay(400).fadeIn(500);}
-        else{$('#previousImgWrap ').fadeIn(500);}
+        var h3 = json.images[mainId].title;
+        var p = json.images[mainId].caption;
+        var price = json.images[mainId].price;
+
         $('#mainImgCol').fadeIn();
         $('#mainCapCol').fadeIn();
-        if(mainImgId+2 < json.images.length){$('#nextImgWrap').fadeIn(500);}
-         $('#bidSection').fadeIn(500);
-
-        mainImgId++;
-        history.replaceState({ url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
-});
-
-//-------------------------------------------------------------------Click on previous image in Coverflow event handler
-$('#main-content').on('click','#previousImgCol .img-responsive', function () {
-        if(mainImgId-2 >= 0){
-            var imgSrcPrev = json.images[mainImgId -2].src;}
-        var imgSrc = json.images[mainImgId-1].src;
-        var imgSrcNext = json.images[mainImgId].src;
-
-        var h3 = json.images[mainImgId-1].title;
-        var p = json.images[mainImgId-1].caption;
-        var price = json.images[mainImgId-1].price;
-
-        $('#nextImgWrap .img-responsive').removeClass('hidden');
-        $('#nextImgWrap .arrowNext').removeClass('hidden');
-
-        $('#nextImgWrap').fadeOut(function () {
-            $('#nextImgWrap .img-responsive').attr('src', imgSrcNext);});
-
-        $('#mainImgCol').fadeOut(function () {
-            $('#mainImgCol .img-responsive').attr('src', imgSrc);});
-        $('#mainCapCol').fadeOut(function () {
-            $('.covFlow h3').text(h3);
-            $('.covFlow p').text(p);
-            $('.covFlow h1').text(price + " zł");
-        });
-
-        $('#previousImgWrap').fadeOut(function () {
-            if(mainImgId-2 >= 0){
-                $('#previousImgWrap .img-responsive').attr('src', imgSrcPrev);}
-        });
-
-        $('#bidSection').fadeOut();
-
-        if(mainImgId == json.images.length-1){$('#nextImgWrap ').delay(400).fadeIn(500);}
-        else{$('#nextImgWrap').fadeIn(500);}
-        $('#mainImgCol').fadeIn();
-        $('#mainCapCol').fadeIn();
-        if(mainImgId-2 >= 0){$('#previousImgWrap').fadeIn(500);}
         $('#bidSection').fadeIn(500);
 
-        mainImgId--;
-        history.replaceState({url: '#covFlow' + mainImgId}, null, '#covFlow' + mainImgId);
-});
+        history.replaceState({url: '#covFlow' + mainId}, null, '#covFlow' + mainId);
+    });
+
+//-------------------------------------------------------------------------------------Prev Image Hover
+
+    $('#main-content').on('mouseenter', '#covFlow #prev', function () {
+        var prevImg = $('#covList > li:nth-child(' + mainId + ')');
+        prevImg.css('opacity', '1');
+    });
+
+    $('#main-content').on('mouseleave', '#covFlow #prev', function () {
+        var prevImg = $('#covList > li:nth-child(' + mainId + ')');
+        prevImg.css('opacity', '0.6');
+    });
+
+//-------------------------------------------------------------------------------------Next Image Hover
+
+    $('#main-content').on('mouseenter', '#covFlow #next', function () {
+        var prevImg = $('#covList > li:nth-child(' + (mainId+2) + ')');
+        prevImg.css('opacity', '1');
+    });
+
+    $('#main-content').on('mouseleave', '#covFlow #next', function () {
+        var prevImg = $('#covList > li:nth-child(' + (mainId+2) + ')');
+        prevImg.css('opacity', '0.6');
+    });
 
 
+//-------------------------------------------------------------------------------------Next Image Click
+
+    $('#main-content').on('click', '#covFlow #next', function () {
 
 
+        var prevImg = $('#covList > li:nth-child(' + mainId + ')');
+        var mainImg = $('#covList > li:nth-child(' + (mainId+1) + ')');
+        var nextImg = $('#covList > li:nth-child(' + (mainId+2) + ')');
+        var nextImg2 = $('#covList > li:nth-child(' + (mainId+3) + ')');
+
+        prevImg.css('opacity', '0');
+        prevImg.css('z-index', '0');
+        prevImg.removeAttr('id');
+
+        mainImg.css('transform', 'translate3d(0,0,0) rotateY(-45deg) scale(0.8)');
+        mainImg.css('z-index', '1');
+        mainImg.css('opacity', '0.6');
+        mainImg.attr('id', 'prev');
+
+        nextImg.css('transform', 'translate3d(100%,0,0) rotateY(0) scale(1)');
+        nextImg.css('z-index', '2');
+        nextImg.css('opacity', '1');
+        nextImg.removeAttr('id');
+
+        nextImg2.css('opacity', '0.6');
+        nextImg2.css('z-index', '1');
+        nextImg2.attr('id', 'next');
+
+        mainId++;
+
+        $('#mainCapCol').fadeOut(function () {
+            $('.covFlow h3').text(h3);
+            $('.covFlow p').text(p);
+            $('.covFlow h1').text(price + " zł");
+        });
+        $('#bidSection').fadeOut();
+
+        var h3 = json.images[mainId].title;
+        var p = json.images[mainId].caption;
+        var price = json.images[mainId].price;
+
+        $('#mainImgCol').fadeIn();
+        $('#mainCapCol').fadeIn();
+        $('#bidSection').fadeIn(500);
+
+        history.replaceState({ url: '#covFlow' + mainId}, null, '#covFlow' + mainId);
 
 
-
-
-
-
-
-
-
+    });
 
 }());
