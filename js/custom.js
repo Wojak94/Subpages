@@ -179,7 +179,7 @@ $('#main-content').on('click', '.thumbnail', function () {
         var i = 0;                                                                  //image is currently drawn
 
         var mainRow = document.createElement('div');
-        mainRow.className = 'row';
+        mainRow.className = 'row hidden';
         mainRow.id = 'main-row';
 
         var covFlow = document.createElement('div');
@@ -359,6 +359,10 @@ $('#main-content').on('click', '.thumbnail', function () {
         bidBtnWrap.appendChild(buttonBid);
         buttonBid.appendChild(h4BtnBid);
         bidSection.appendChild(rightBid);
+
+        $(document).ready(function () {                                                 //when populating page is done, fadeIn content
+            $('#main-row').fadeIn().removeClass('hidden');
+        });
     }
 
 
