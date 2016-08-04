@@ -124,7 +124,6 @@ body {
     padding: 0;
     perspective: 1200px;
 
-
 }
 
 #covList li{
@@ -151,10 +150,6 @@ body {
 }
 
 
-li:hover{
-    opacity: 1;
-}
-
 /*END OF NEW COVERFLOW */
 
 
@@ -165,6 +160,7 @@ li:hover{
     display: table;
     margin-top: 20px;
     margin-bottom: 20px;
+    z-index: -100;
 }
 
 .caption.covFlow{
@@ -241,7 +237,7 @@ li:hover{
 #navbarSecondWrap .navbar .nav > li.dropdown.open.active > a:hover {}
 #navbarSecondWrap .navbar .nav > li.dropdown.open > a {color: #fff;background-color: #8e8c84;border-color: #fff; z-index: 100}
 #navbarSecondWrap .navbar .nav > li > .dropdown-menu {background-color: #8e8c84; border: 0; padding: 0}
-#navbarSecondWrap .navbar .nav > li > .dropdown-menu > li > a{color: #fff; transition: all 0.3s ease}
+#navbarSecondWrap .navbar .nav > li > .dropdown-menu > li > a{color: #fff;}
 #navbarSecondWrap .navbar .nav > li > .dropdown-menu > li > a:hover{background-color:#79a736; color: #fff; }
 #navbarSecondWrap .navbar .nav > li.dropdown.open.active > a:hover .caret, .tnav .navbar .nav > li.dropdown.open > a .caret {border-top-color: #fff;}
 #navbarSecondWrap .navbar .navbar-brand {color:#fff;}

@@ -197,11 +197,11 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         //---------------------------------------------------------------------------------FirstElements
 
-        if (mainId > 1) {                                                           //if main image
+        if (mainId > 1) {                                                           //load previous hidden images if any
 
             for (i; prevId > i; i++) {
                 var listElem = document.createElement('li');
-                $(listElem).css('transform', 'translate3d(0, 0, 0) rotateY(-45deg) scale(0.8)');
+                $(listElem).css('transform', 'translate3d(0, 0, 0) rotateY(-90deg) scale(0.8)');
 
                 var img = document.createElement('img');
                 img.src = json.images[i].src;
@@ -213,7 +213,7 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         //---------------------------------------------------------------------------------PrevElement
 
-        if (mainId > 0) {
+        if (mainId > 0) {                                                           //load previous image if it exist
 
             var listElem = document.createElement('li');
             $(listElem).css('transform', 'translate3d(0, 0, 0) rotateY(-45deg) scale(0.8)');
@@ -246,7 +246,7 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         //---------------------------------------------------------------------------------NextElement
 
-        if (mainId < (json.images.length-1)) {
+        if (mainId < (json.images.length-1)) {                                      //load next image if it exist
 
             var listElem = document.createElement('li');
             $(listElem).css('transform', 'translate3d(200%, 0, 0) rotateY(45deg) scale(0.8)');
@@ -264,11 +264,11 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         //----------------------------------------------------------------------------------ClosingElements
 
-        if (mainId < (json.images.length-2)) {
+        if (mainId < (json.images.length-2)) {                                      //load next hidden images if any
 
             for (i; json.images.length > i; i++) {
                 var listElem = document.createElement('li');
-                $(listElem).css('transform', 'translate3d(200%, 0, 0) rotateY(45deg) scale(0.8)');
+                $(listElem).css('transform', 'translate3d(200%, 0, 0) rotateY(90deg) scale(0.8)');
 
                 var img = document.createElement('img');
                 img.src = json.images[i].src;
@@ -376,6 +376,7 @@ $('#main-content').on('click', '.thumbnail', function () {
         console.log(mainImg);
         console.log(nextImg);
 
+        prevImg2.css('transform', 'translate3d(0,0,0) rotateY(-45deg) scale(0.8)');
         prevImg2.css('opacity', '0.6');
         prevImg2.css('z-index', '1');
         prevImg2.attr('id', 'prev');
@@ -390,38 +391,39 @@ $('#main-content').on('click', '.thumbnail', function () {
         mainImg.css('opacity', '0.6');
         mainImg.attr('id', 'next');
 
+        nextImg.css('transform', 'translate3d(200%,0,0) rotateY(90deg) scale(0.8)');
         nextImg.css('opacity', '0');
         nextImg.css('z-index', '0');
         nextImg.removeAttr('id');
 
         mainId--;
 
-        $('#mainCapCol').fadeOut(function () {
+        $('#mainCapCol').fadeOut(300, function () {
             $('.covFlow h3').text(h3);
             $('.covFlow p').text(p);
             $('.covFlow h1').text(price + " zł");
         });
-        $('#bidSection').fadeOut();
+        $('#bidSection').fadeOut(300);
 
         var h3 = json.images[mainId].title;
         var p = json.images[mainId].caption;
         var price = json.images[mainId].price;
 
-        $('#mainImgCol').fadeIn();
-        $('#mainCapCol').fadeIn();
-        $('#bidSection').fadeIn(500);
+        $('#mainCapCol').fadeIn(300);
+        $('#bidSection').fadeIn(300);
 
         history.replaceState({url: '#covFlow' + mainId}, null, '#covFlow' + mainId);
     });
 
 //-------------------------------------------------------------------------------------Prev Image Hover
 
+
     $('#main-content').on('mouseenter', '#covFlow #prev', function () {
         $(this).css('opacity', '1');
     });
 
     $('#main-content').on('mouseleave', '#covFlow #prev', function () {
-       $(this).css('opacity', '0.6');
+        $(this).css('opacity', '0.6');
     });
 
 //-------------------------------------------------------------------------------------Next Image Hover
@@ -439,12 +441,12 @@ $('#main-content').on('click', '.thumbnail', function () {
 
     $('#main-content').on('click', '#covFlow #next', function () {
 
-
         var prevImg = $('#covList #prev');
         var mainImg = $('#covList #main');
         var nextImg = $('#covList #next');
         var nextImg2 = nextImg.next();
 
+        prevImg.css('transform', 'translate3d(0,0,0) rotateY(-90deg) scale(0.8)');
         prevImg.css('opacity', '0');
         prevImg.css('z-index', '0');
         prevImg.removeAttr('id');
@@ -459,26 +461,26 @@ $('#main-content').on('click', '.thumbnail', function () {
         nextImg.css('opacity', '1');
         nextImg.attr('id', 'main');
 
+        nextImg2.css('transform', 'translate3d(200%,0,0) rotateY(45deg) scale(0.8)');
         nextImg2.css('opacity', '0.6');
         nextImg2.css('z-index', '1');
         nextImg2.attr('id', 'next');
 
         mainId++;
 
-        $('#mainCapCol').fadeOut(function () {
+        $('#mainCapCol').fadeOut(300, function () {
             $('.covFlow h3').text(h3);
             $('.covFlow p').text(p);
             $('.covFlow h1').text(price + " zł");
         });
-        $('#bidSection').fadeOut();
+        $('#bidSection').fadeOut(300);
 
         var h3 = json.images[mainId].title;
         var p = json.images[mainId].caption;
         var price = json.images[mainId].price;
 
-        $('#mainImgCol').fadeIn();
-        $('#mainCapCol').fadeIn();
-        $('#bidSection').fadeIn(500);
+        $('#mainCapCol').fadeIn(300);
+        $('#bidSection').fadeIn(300);
 
         history.replaceState({ url: '#covFlow' + mainId}, null, '#covFlow' + mainId);
 
