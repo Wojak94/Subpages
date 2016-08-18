@@ -106,7 +106,10 @@ if($('#mainContentWrap').length){                                               
         location.reload();                                                          //so just reload it
         return;
 }
-       var mainContentWrap = document.createElement('div');
+        $('#myCarousel').fadeIn();                                                  //show banner carousel with fadeIn
+        $('#myCarousel').show();
+
+        var mainContentWrap = document.createElement('div');
         mainContentWrap.className = 'hidden';                                       //setting div to hidden for fadeIn when its ready
         mainContentWrap.id = 'mainContentWrap';
 
@@ -191,6 +194,7 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         var mainContent = document.getElementById('main-content');
         $(mainContent).empty();
+
         mainContent.appendChild(mainRow);
         mainRow.appendChild(covFlow);
         covFlow.appendChild(covList);
@@ -362,7 +366,10 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         $(document).ready(function () {                                                 //when populating page is done, fadeIn content
             $('#main-row').fadeIn().removeClass('hidden');
+            $('#myCarousel').slideUp();
         });
+
+
     }
 
 
@@ -488,6 +495,15 @@ $('#main-content').on('click', '.thumbnail', function () {
 
         history.replaceState({ url: '#covFlow' + mainId}, null, '#covFlow' + mainId);
 
+    });
+
+
+    $('.carousel-control.left').click(function() {
+        $('#myCarousel').carousel('prev');
+    });
+
+    $('.carousel-control.right').click(function() {
+        $('#myCarousel').carousel('next');
     });
 
 
