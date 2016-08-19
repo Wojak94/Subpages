@@ -369,7 +369,6 @@ $('#main-content').on('click', '.thumbnail', function () {
             $('#myCarousel').slideUp();
         });
 
-
     }
 
 
@@ -497,15 +496,12 @@ $('#main-content').on('click', '.thumbnail', function () {
 
     });
 
+//-------------------------------------------------------------------Changing 'active' class on click in menu navbar
 
-    $('.carousel-control.left').click(function() {
-        $('#myCarousel').carousel('prev');
+    $("#navbarSecondWrap li").on("click", function() {
+        $("#navbarSecondWrap li").removeClass("active");
+        $(this).addClass("active");
     });
-
-    $('.carousel-control.right').click(function() {
-        $('#myCarousel').carousel('next');
-    });
-
 
 
 }());
